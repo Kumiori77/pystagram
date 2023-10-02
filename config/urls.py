@@ -25,7 +25,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", root_views.IndexView.as_view(), name="index"),
-    path("users/", include("users.urls"))
+    path("users/", include("users.urls")),
+    path("posts/", include("posts.urls")),
 ]
 
 app_name = "root"
