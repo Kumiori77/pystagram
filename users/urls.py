@@ -7,7 +7,8 @@ from . import views
 # from django.conf.urls.static import static
 
 urlpatterns = [
-    path("login/", views.LoginForm.as_view(), name="login"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
 ]
 
 app_name = "users"
