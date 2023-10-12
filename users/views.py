@@ -67,4 +67,28 @@ class LogoutView(View):
         return redirect("users:login")
     
     
+class SignupView(FormView):
+    template_name="users/signup.html"
+
+    form_class = forms.SignupForm
+
+    success_url = reverse_lazy("posts:feeds")
+
+    # 폼이 전달되면 호출
+    def form_valid(self, form) :
+        
+        # 폼이 유효한지 확인
+        if form.is_valid():
+            # 회원가입
+            user = form.save()
+
+            # 로그인
+            login(user=user, request=self.request)
+
+            return super().form_valid(form)
+        
+        else :
+            return self.render_to_response(self.get_context_data(form=form))
+        
+       
 
