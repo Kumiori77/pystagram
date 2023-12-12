@@ -1,28 +1,19 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+{% extends "base.html" %}
 
-<body>
-    <div id="signup">
+{% block content %}
+<div id="signup">
 
-        <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
 
-            <h1>Pystagram</h1>
+        <h1>Pystagram</h1>
 
-            {% csrf_token %}
+        {% csrf_token %}
 
-            {{ form.as_p }}
+        {{ form.as_p }}
 
-            <button type="submit" class="btn btn-signup">가입</button>
+        <button type="submit" class="btn btn-signup">가입</button>
+        <a href="/users/login">로그인 페이지로 이동</a>
 
-        </form>
-    </div>
-    
-</body>
-</html>
+    </form>
+</div>
+{% endblock  %}
