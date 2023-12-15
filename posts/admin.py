@@ -14,7 +14,6 @@ class PostImageInline(admin.TabularInline):
     extra = 1
 
 
-
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ["id", "content"]

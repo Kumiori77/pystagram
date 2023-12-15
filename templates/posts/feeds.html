@@ -1,17 +1,50 @@
-<!DOCTYPE html>
-<html lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>Feeds</h1>
+{% extends "base.html" %}
 
-    <div>{{ user.username }} (ID : {{ user.id }} )</div>
+{% block content %}
 
-    <a href="{% url 'users:logout' %}">로그아웃</a>
+    <nav>
+        <h1>Pystagram</h1>
+    </nav>
 
-</body>
-</html>
+    <div id="feeds" class="post-container">
+        {% comment %} 전달된 Post 순회 {% endcomment %}
+        {% for post in  posts%}
+            <article class="post">
+                <header class="post-header">
+                    {% if post.user.profile_image %}
+                    <img src={{ post.user.profile_image.url }}>
+                    {% endif %}
+                    <span>{{ post.user.username }}</span>
+                </header>
+
+                {% comment %} 이미지 슬라이드 영역 {% endcomment %}
+                <div class="post-images splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in  post.postimage_set.all %}
+                                {% if image.photo %}
+                                <li class="splide__slide">
+                                    <img src="{{ image.photo.url }}">
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </article>
+        {% endfor %}
+
+    </div>
+
+    {% comment %} 이미지 슬라이드 동작 코드 {% endcomment %}
+    <script>
+        const elms = document.getElementsByClassName('splide');
+        for (let i = 0; i < elms.length; i++) {
+            new Splide(elms[i]).mount();
+        }
+    </script>
+
+{% endblock %}
+
+
