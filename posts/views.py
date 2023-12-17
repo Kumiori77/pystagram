@@ -6,7 +6,7 @@ from . import models
 from . import forms
 
 from django.views.decorators.http import require_POST
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 # Create your views here.
 class FeedsView(TemplateView):
@@ -41,7 +41,18 @@ def comment_add(request):
 
         return HttpResponseRedirect(f"/posts/feeds/#post-{comment.post.id}")
 
-    
+
+@require_POST
+def comment_delete(request, comment_id):
+    if request.method == "POST":
+        comment = models.Comment.objects.get(id = comment_id)
+
+        if comment.user == request.user:
+            comment.delete()
+
+            return HttpResponseRedirect(f"/posts/feeds/#post-{comment.post.id}")
+        else :
+            return HttpResponseForbidden("해당 댓글을 삭제할 권한이 없습니다.")
         
 
 
