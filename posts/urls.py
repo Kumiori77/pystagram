@@ -8,6 +8,7 @@ from . import views
 
 urlpatterns = [
     path("feeds/", views.FeedsView.as_view(), name="feeds"),
+    path("comment_add/", views.comment_add, name="comment_add"),
 ]
 
 app_name = "posts"

@@ -3,6 +3,10 @@ from django import http
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, FormView
 from . import models
+from . import forms
+
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 class FeedsView(TemplateView):
@@ -19,7 +23,25 @@ class FeedsView(TemplateView):
 
         context["posts"] = models.Post.objects.all()
 
+        context["comment_form"] = forms.CommentForm()
+
         return context
+    
+@require_POST
+def comment_add(request):
+    
+    form = forms.CommentForm(data= request.POST)
+    if form.is_valid() :
+
+        comment = form.save(commit=False)
+
+        comment.user = request.user
+
+        comment.save()
+
+        return HttpResponseRedirect(f"/posts/feeds/#post-{comment.post.id}")
+
+    
         
 
 

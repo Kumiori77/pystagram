@@ -2,18 +2,19 @@
 
 {% block content %}
 
-    <nav>
+    <nav style="display: flex; justify-content: space-between;">
         <h1>
             <a href="/posts/feeds/">Pystagram</a>
         </h1>
         {% comment %} 로그아웃 버튼 {% endcomment %}
-        <a href="/users/logout/">Logout</a>
+        <a href="/users/logout/" style="text-align: right;">Logout</a>
     </nav>
+    <br><br>
 
     <div id="feeds" class="post-container">
         {% comment %} 전달된 Post 순회 {% endcomment %}
         {% for post in  posts%}
-            <article class="post">
+            <article id="post-{{ post.id }}" class="post">
                 <header class="post-header">
                     {% if post.user.profile_image %}
                     <img src={{ post.user.profile_image.url }}>
@@ -44,7 +45,7 @@
                 {% comment %} 좋아요, 댓글 버튼 {% endcomment %}
                 <div class="post-buttons">
                     <button>Likes(0)</button>
-                    <span>Comments(0)</span>
+                    <span>Comments( {{ post.comment_set.count }})</span>
                 </div>
 
                 {% comment %} 댓글 목록 {% endcomment %}
@@ -62,8 +63,12 @@
                 {% comment %} 작성 일자, 댓글 입력창 {% endcomment %}
                 <small>{{ post.created }}</small>
                 <div class="post-comment-create">
-                    <input type="text" placeholder="댓글 작성">
-                    <button type="submit">등록</button>
+                    <form method="POST" action="/posts/comment_add/">
+                        {% csrf_token %}
+                        <input type="hidden" name="post" value="{{ post.id }}">
+                        {{ comment_form.content }}
+                        <button type="submit">등록</button>
+                    </form>
                 </div>
 
             </article>
