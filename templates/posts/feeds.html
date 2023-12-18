@@ -2,10 +2,12 @@
 
 {% block content %}
 
-    <nav style="display: flex; justify-content: space-between;">
+    <nav>
         <h1>
             <a href="/posts/feeds/">Pystagram</a>
         </h1>
+        {% comment %} 글 등록 버튼 {% endcomment %}
+        <a href="/posts/post_add/" style="text-align: right;">Add Post</a><br>
         {% comment %} 로그아웃 버튼 {% endcomment %}
         <a href="/users/logout/" style="text-align: right;">Logout</a>
     </nav>

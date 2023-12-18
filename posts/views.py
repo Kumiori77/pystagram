@@ -55,5 +55,28 @@ def comment_delete(request, comment_id):
             return HttpResponseForbidden("해당 댓글을 삭제할 권한이 없습니다.")
         
 
+class PostAdd(FormView):
+    template_name = "posts/post_add.html"
+
+    form_class = forms.PostForm
+
+
+    def form_valid(self, form):
+
+        post = form.save(commit=False)
+        post.user = self.request.user
+        post.save()
+
+        for image_file in self.request.FILES.getlist("images"):
+            models.PostImage.objects.create(
+                post = post,
+                photo = image_file,
+            )
+
+        return HttpResponseRedirect(f"/posts/feeds/#post-{post.id}")
+        
+    
+        
+
 
 

@@ -9,7 +9,8 @@ from . import views
 urlpatterns = [
     path("feeds/", views.FeedsView.as_view(), name="feeds"),
     path("comment_add/", views.comment_add, name="comment_add"),
-    path("comment_delete/<int:comment_id>", views.comment_delete, name="comment_delete")
+    path("comment_delete/<int:comment_id>", views.comment_delete, name="comment_delete"),
+    path("post_add/", views.PostAdd.as_view(), name="post_add"),
 ]
 
 app_name = "posts"
