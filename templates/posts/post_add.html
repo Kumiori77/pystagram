@@ -4,10 +4,10 @@
 
 <nav>
     <h1>
-        <a href="/posts/feeds/">Pystagram</a>
+        <a href="{% url "posts:feeds" %}">Pystagram</a>
     </h1>
     {% comment %} 로그아웃 버튼 {% endcomment %}
-    <a href="/users/logout/" style="text-align: right;">Logout</a>
+    <a href="{% url "users:logout" %}" style="text-align: right;">Logout</a>
 </nav>
 
 <div id="post-add">

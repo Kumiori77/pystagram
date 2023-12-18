@@ -7,6 +7,7 @@ from . import forms
 
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse_lazy
 
 # Create your views here.
 class FeedsView(TemplateView):
@@ -39,7 +40,8 @@ def comment_add(request):
 
         comment.save()
 
-        return HttpResponseRedirect(f"/posts/feeds/#post-{comment.post.id}")
+        url = reverse_lazy("posts:feeds") + f"#post-{comment.post.id}"
+        return HttpResponseRedirect(url)
 
 
 @require_POST
@@ -50,7 +52,8 @@ def comment_delete(request, comment_id):
         if comment.user == request.user:
             comment.delete()
 
-            return HttpResponseRedirect(f"/posts/feeds/#post-{comment.post.id}")
+            url = reverse_lazy("posts:feeds") + f"#post-{comment.post.id}"
+            return HttpResponseRedirect(url)
         else :
             return HttpResponseForbidden("해당 댓글을 삭제할 권한이 없습니다.")
         
@@ -73,8 +76,8 @@ class PostAdd(FormView):
                 photo = image_file,
             )
 
-        return HttpResponseRedirect(f"/posts/feeds/#post-{post.id}")
-        
+        url = reverse_lazy("posts:feeds") + f"#post-{post.id}"
+        return HttpResponseRedirect(url)
     
         
 
