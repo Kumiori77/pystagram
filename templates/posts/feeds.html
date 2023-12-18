@@ -25,6 +25,8 @@
                 </header>
 
                 {% comment %} 이미지 슬라이드 영역 {% endcomment %}
+
+                {% if post.postimage_set.count > 0 %}
                 <div class="post-images splide">
                     <div class="splide__track">
                         <ul class="splide__list">
@@ -38,10 +40,17 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
 
                 {% comment %} 글 내용 출력 {% endcomment %}
                 <div class="post-content">
                     {{ post.content|linebreaksbr }}
+
+                    <div class="post-tags">
+                        {% for tag in post.tags.all %}
+                            <span>#{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
 
                 {% comment %} 좋아요, 댓글 버튼 {% endcomment %}

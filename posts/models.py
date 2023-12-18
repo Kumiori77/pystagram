@@ -13,6 +13,9 @@ class Post(models.Model):
 
     created = models.DateTimeField("등록일", auto_now_add=True)
 
+    # 해시태그 다대다 관계
+    tags = models.ManyToManyField("posts.HashTag", verbose_name="해시태그 목록", blank=True)
+
 
 class PostImage(models.Model):
     post = models.ForeignKey(
@@ -39,3 +42,11 @@ class Comment(models.Model):
 
     content = models.TextField("내용")
     created = models.DateTimeField("작성일", auto_now_add=True)
+
+
+class HashTag(models.Model):
+    name = models.CharField("태그명", max_length=50)
+
+    def __str__(self):
+
+        return self.name
