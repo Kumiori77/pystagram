@@ -80,6 +80,27 @@ class PostAdd(FormView):
         return HttpResponseRedirect(url)
     
         
+class Tags(TemplateView):
 
+    template_name = "posts/tags.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        tag_name = kwargs["tag_name"]
+
+        try:
+            tag = models.HashTag.objects.get(name=tag_name)
+
+        except models.HashTag.DoesNotExist:
+            posts = models.Post.objects.none()
+        
+        else :
+            posts = models.Post.objects.filter(tags=tag)
+        
+        context["posts"] = posts
+        context["tag_name"] = tag_name
+        return context
+    
 
 
