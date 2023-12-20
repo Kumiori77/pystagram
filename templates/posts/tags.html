@@ -2,16 +2,7 @@
 
 {% block content %}
 
-<nav>
-    <h1>
-        <a href="{% url "posts:feeds" %}">Pystagram</a>
-    </h1>
-    {% comment %} 글 등록 버튼 {% endcomment %}
-    <a href="{% url "posts:post_add" %}" style="text-align: right;">Add Post</a><br>
-    {% comment %} 로그아웃 버튼 {% endcomment %}
-    <a href="{% url "users:logout" %}" style="text-align: right;">Logout</a>
-</nav>
-<hr><br>
+{% include "posts/nav.html" %}
 
 <div id="tags">
     <header class="tags-header">
@@ -23,10 +14,15 @@
         {% for post in posts %}
             {% if post.postimage_set.first and post.postimage_set.first.photo %}
                 <div class="post-grid">
-                    <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                    <a href="{% url "posts:post_detail" post_id=post.id %}">
+                    <img src="{{ post.postimage_set.first.photo.url }}" alt=""></a>
                 </div>
             {% else %}
-                <div class="post-grid">{{ post.content }}</div>
+                <div class="post-grid">
+                    <a href="{% url "posts:post_detail" post_id=post.id %}">
+                        {{ post.content }}
+                    </a>
+                </div>
             {% endif %}
 
         {% empty %}

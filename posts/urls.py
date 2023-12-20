@@ -12,6 +12,7 @@ urlpatterns = [
     path("comment_delete/<int:comment_id>", views.comment_delete, name="comment_delete"),
     path("post_add/", views.PostAdd.as_view(), name="post_add"),
     path("tags/<str:tag_name>/", views.Tags.as_view(), name="tags"),
+    path("<int:post_id>/", views.PostDetail.as_view(), name="post_detail"),
 ]
 
 app_name = "posts"

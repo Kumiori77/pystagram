@@ -40,7 +40,9 @@ def comment_add(request):
 
         comment.save()
 
-        url = reverse_lazy("posts:feeds") + f"#post-{comment.post.id}"
+        
+        url = request.GET.get("next") or reverse_lazy("posts:feeds") + f"#post-{comment.post.id}"
+
         return HttpResponseRedirect(url)
 
 
@@ -111,6 +113,24 @@ class Tags(TemplateView):
         context["posts"] = posts
         context["tag_name"] = tag_name
         return context
+    
+
+class PostDetail(TemplateView):
+
+    template_name = "posts/post_detail.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        postId = kwargs["post_id"]
+        post = models.Post.objects.get(id = postId)
+        context["post"] = post
+
+        context["comment_form"] = forms.CommentForm()
+
+        return context
+
     
 
 

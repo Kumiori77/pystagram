@@ -1,0 +1,10 @@
+<nav>
+    <h1>
+        <a href="{% url "posts:feeds" %}">Pystagram</a>
+    </h1>
+    {% comment %} 글 등록 버튼 {% endcomment %}
+    <a href="{% url "posts:post_add" %}" style="text-align: right;">Add Post</a><br>
+    {% comment %} 로그아웃 버튼 {% endcomment %}
+    <a href="{% url "users:logout" %}" style="text-align: right;">Logout</a>
+</nav>
+<hr><br>
