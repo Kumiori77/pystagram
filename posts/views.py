@@ -76,6 +76,16 @@ class PostAdd(FormView):
                 photo = image_file,
             )
 
+        # 해시태그 추가
+        tag_str = self.request.POST.get("tags")
+        if tag_str:
+            # 문자열에서 태그를 추출해서 리스트로 저장
+            tag_names = [tag_name.strip() for tag_name in tag_str.split(",") ]
+            for tag_name in tag_names:
+                tag, _ = models.HashTag.objects.get_or_create(name=tag_name)
+
+                post.tags.add(tag)
+
         url = reverse_lazy("posts:feeds") + f"#post-{post.id}"
         return HttpResponseRedirect(url)
     
