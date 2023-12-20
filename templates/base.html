@@ -1,25 +1,5 @@
-{% load static %}
+{% extends "_base.html" %}
 
-<!DOCTYPE html>
-<html lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    {% comment %} 이미지 슬라이드 위해 추가 {% endcomment %}
-    <link rel="stylesheet" href="{% static 'splide/splide.css' %}">
-    <script src="{% static 'splide/splide.js' %}"></script>
-    <title>PyStagram</title>
-</head>
-
-
-<body>
-
-    {% block content %}
-
-    {% endblock %}
-
-
-</body>
-</html>
+{% block base_content %}
+    {% block content %}{% endblock  %}
+{% endblock  %}

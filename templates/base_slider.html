@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'splide/splide.css' %}">
+    <script src="{% static "splide/splide.js" %}"></script>
+{% endblock  %}
+
+{% block base_content %}
+
+    {% include "nav.html" %}
+
+    {% block content %}{% endblock  %}
+
+        {% comment %} 이미지 슬라이드 동작 코드 {% endcomment %}
+    <script>
+        const elms = document.getElementsByClassName('splide');
+        for (let i = 0; i < elms.length; i++) {
+            new Splide(elms[i]).mount();
+        }
+    </script>
+
+{% endblock  %}
