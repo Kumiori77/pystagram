@@ -37,7 +37,7 @@
 
     {% comment %} 좋아요, 댓글 버튼 {% endcomment %}
     <div class="post-buttons">
-        <form action="{% url "posts:post_like" post_id=post.id %}?next={{ action_redirect_url }}" method="POST`">
+        <form action="{% url "posts:post_like" post_id=post.id %}?next={{ action_redirect_url }}" method="POST">
             {% csrf_token %}
             <button type="submit" 
                 {% if user in post.like_users.all %}
