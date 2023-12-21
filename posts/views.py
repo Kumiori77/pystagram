@@ -131,6 +131,21 @@ class PostDetail(TemplateView):
 
         return context
 
-    
 
+# 좋아요 처리 메소드 
+def psot_like(request, post_id):
+    post = models.Post.objects.get(id=post_id)
+    user = request.user
+
+    # 좋아요가 눌려있다면
+    if user.like_posts.filter(id=post_id).exists():
+        user.like_posts.remove(post)
+    # 좋아요가 안눌려있다면
+    else : 
+        user.like_posts.add(post)
+
+    # 이동할 url
+    url = request.GET.get("next") or reverse_lazy("posts:feeds") + f"#post-{post.id}"
+
+    return HttpResponseRedirect(url)
 

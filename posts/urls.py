@@ -13,6 +13,7 @@ urlpatterns = [
     path("post_add/", views.PostAdd.as_view(), name="post_add"),
     path("tags/<str:tag_name>/", views.Tags.as_view(), name="tags"),
     path("<int:post_id>/", views.PostDetail.as_view(), name="post_detail"),
+    path("<int:post_id>/like/", views.psot_like, name="post_like"),
 ]
 
 app_name = "posts"

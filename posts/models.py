@@ -16,6 +16,9 @@ class Post(models.Model):
     # 해시태그 다대다 관계
     tags = models.ManyToManyField("posts.HashTag", verbose_name="해시태그 목록", blank=True)
 
+    def __str__(self):
+        return f"{self.user.username}의 Post (id : {self.id})"
+
 
 class PostImage(models.Model):
     post = models.ForeignKey(
