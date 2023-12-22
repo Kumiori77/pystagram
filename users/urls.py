@@ -13,7 +13,7 @@ urlpatterns = [
     path("<int:user_id>/profile/", views.ProfileView.as_view(), name="profile"),
     path("<int:user_id>/followers/", views.Followers.as_view(), name="followers"),
     path("<int:user_id>/following/", views.Following.as_view(), name="following"),
-
+    path("<int:user_id>/follow/", views.follow, name="follow"),
 ]
 
 app_name = "users"

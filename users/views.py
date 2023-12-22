@@ -1,6 +1,6 @@
 # from typing import Any
 # from django import http
-# from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from typing import Any
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
@@ -133,9 +133,26 @@ class Following(TemplateView):
 
         user = get_object_or_404(models.User, id=user_id)
         relationships = user.following_relationships.all()
-        print(relationships)
 
         context["user"] = user
         context["relationships"] = relationships
 
         return context
+
+
+def follow(request, user_id):
+    user = request.user
+    target_user = models.User.objects.get(id=user_id)
+
+    # 이미 팔로우 하는 경우
+    if target_user in user.following.all():
+        user.following.remove(target_user)
+    
+    # 새로 팔로우 하는 경우
+    else :
+        user.following.add(target_user)
+
+    url = request.GET.get("next") or reverse_lazy("users:profile", args=[user.id])
+
+    return HttpResponseRedirect(url)
+
