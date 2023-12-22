@@ -10,6 +10,10 @@ urlpatterns = [
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("signup/", views.SignupView.as_view(), name="signup"),
+    path("<int:user_id>/profile/", views.ProfileView.as_view(), name="profile"),
+    path("<int:user_id>/followers/", views.Followers.as_view(), name="followers"),
+    path("<int:user_id>/following/", views.Following.as_view(), name="following"),
+
 ]
 
 app_name = "users"

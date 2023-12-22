@@ -1,0 +1,27 @@
+{% extends "base_profile.html" %}
+
+{% block bottom_data %}
+
+{% comment %} 작성한 포스트 목록 {% endcomment %}
+<div class="post-grid-container">
+    {% for post in user.post_set.all %}
+        {% if post.postimage_set.first and post.postimage_set.first.photo %}
+            <div class="post-grid">
+                <a href="{% url "posts:post_detail" post_id=post.id %}">
+                <img src="{{ post.postimage_set.first.photo.url }}" alt=""></a>
+            </div>
+        {% else %}
+            <div class="post-grid">
+                <a href="{% url "posts:post_detail" post_id=post.id %}">
+                    {{ post.content }}
+                </a>
+            </div>
+        {% endif %}
+
+    {% empty %}
+        <p>검색된 게시물이 없습니다.</p>
+
+    {% endfor %}
+</div>
+
+{% endblock  %}

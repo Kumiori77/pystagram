@@ -1,7 +1,8 @@
+# from typing import Any
+# from django import http
+# from django.http import HttpResponse
 from typing import Any
-from django import http
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, FormView
 from django.urls import reverse_lazy
@@ -91,4 +92,50 @@ class SignupView(FormView):
             return self.render_to_response(self.get_context_data(form=form))
         
        
+class ProfileView(TemplateView):
 
+    template_name = "users/profile.html"
+
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+
+        user_id = kwargs["user_id"]
+        user = get_object_or_404(models.User, id=user_id)
+
+        context["user"] = user
+        
+        return context
+
+
+class Followers(TemplateView):
+    template_name = "users/followers.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user_id = kwargs["user_id"]
+
+        user = get_object_or_404(models.User, id=user_id)
+        relationships = user.follower_relationships.all()
+
+        context["user"] = user
+        context["relationships"] = relationships
+
+        return context
+    
+class Following(TemplateView):
+    template_name = "users/following.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user_id = kwargs["user_id"]
+
+        user = get_object_or_404(models.User, id=user_id)
+        relationships = user.following_relationships.all()
+        print(relationships)
+
+        context["user"] = user
+        context["relationships"] = relationships
+
+        return context

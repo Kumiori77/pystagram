@@ -38,7 +38,7 @@ class Relationship(models.Model):
     from_user = models.ForeignKey(
         "users.User",
         verbose_name="팔로우를 요청한 사람",
-        related_name="folling_relationships",
+        related_name="following_relationships",
         on_delete=models.CASCADE
     )
 
